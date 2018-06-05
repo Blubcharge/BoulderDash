@@ -5,7 +5,7 @@
 
 // Constructor
 Player::Player(sf::Texture& _texture)
-	: GridSprite(_texture, GridObject::PLAYER)
+	: GridSprite(_texture)
 {
 
 }
@@ -55,8 +55,7 @@ bool Player::input(const sf::Event& _event)
 			// (if open exit, go to next level)
 
 			// NOTE: This will automatically delete whatever GridObject is in the target cell!
-			if (targetCellObject == nullptr || targetCellObject->GetType() == GridObject::DIRT)
-				m_grid->MoveObject(m_gridX, m_gridY, targetX, targetY);
+			m_grid->MoveObject(m_gridX, m_gridY, targetX, targetY);
 
 			// Return true since we handled some input
 			return true;

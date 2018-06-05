@@ -11,7 +11,7 @@ class GridSprite : public GridObject
 public:
 
 	// Constructor
-	GridSprite(sf::Texture& _texture, GridObject::Type _type);
+	GridSprite(sf::Texture& _texture);
 
 	// Game Object Functions
 	void draw(sf::RenderWindow& _renderWindow) override;

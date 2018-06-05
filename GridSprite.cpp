@@ -3,7 +3,7 @@
 #include "Grid.h"
 
 // Constructor
-GridSprite::GridSprite(sf::Texture& _texture, GridObject::Type _type) : GridObject(_type)
+GridSprite::GridSprite(sf::Texture& _texture)
 {
 	m_sprite.setTexture(_texture);
 }

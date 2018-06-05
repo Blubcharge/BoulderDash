@@ -29,10 +29,12 @@ public:
 
 	// Grid Functions
 	GridObject* GetOjbect(int _x, int _y);
-	void SetObject(int _x, int _y, GridObject* _object, bool _deleteExisting = false);
-
-	void MoveObject(int _xOrigin, int _yOrigin, int _xNew, int _yNew, bool _deleteExisting = true);
-
+	void SetObject(int _x, int _y,
+		GridObject* _object,
+		bool _deleteExisting = false);
+	void MoveObject(int _xOrigin, int _yOrigin,
+		int _xNew, int _yNew,
+		bool _deleteExisting = true);
 	sf::Vector2f GetPosition() { return m_GridPosition; }
 	void SetPosition(sf::Vector2f _newPos) { m_GridPosition = _newPos; }
 

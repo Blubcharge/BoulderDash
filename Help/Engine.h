@@ -15,8 +15,11 @@ private:
 
 	// The grid (will hold everything else)
 	Grid m_Grid;
-	Grid m_Background;
-	Grid m_Wall;
+
+	// Grids for backgrounds & boundries of the game areas.
+	Grid m_background;
+
+	Grid m_rock;
 
 	// Private functions for internal use only:
 private:

@@ -7,9 +7,11 @@ using namespace sf;
 
 Engine::Engine()
 	: m_Grid(10, 10, 64.0f, 64.0f) // Set your grid size here!
+	,m_Background(10,10, 64.0f, 64.0f)
+	,m_Wall(12, 12, 64.0f, 64.0f)
 {
 	// Get the game screen resolution
-	// and creste an SFML window and View
+	// and create an SFML window and View
 	Vector2f resolution;
 	resolution.x = VideoMode::getDesktopMode().width;
 	resolution.y = VideoMode::getDesktopMode().height;
@@ -35,16 +37,20 @@ Engine::Engine()
 	m_Grid.SetObject(0, 0, new Player(TextureHolder::GetTexture("graphics/player_down_01.png")));
 
 	// create exit
-	m_Grid.SetObject(9, 9, new GridSprite(TextureHolder::GetTexture("graphics/exit_locked.png")));
+	m_Grid.SetObject(9, 9, new GridSprite(TextureHolder::GetTexture("graphics/exit_locked.png"),GridObject::EXIT));
 
 	// create diamonds
-	m_Grid.SetObject(1, 4, new GridSprite(TextureHolder::GetTexture("graphics/diamond.png")));
-	m_Grid.SetObject(1, 6, new GridSprite(TextureHolder::GetTexture("graphics/diamond.png")));
-	m_Grid.SetObject(3, 2, new GridSprite(TextureHolder::GetTexture("graphics/diamond.png")));
+	
+	
+	m_Grid.SetObject(1, 4, new GridSprite(TextureHolder::GetTexture("graphics/diamond.png"),GridObject::DIAMOND));
+	m_Grid.SetObject(1, 6, new GridSprite(TextureHolder::GetTexture("graphics/diamond.png"),GridObject::DIAMOND));
+	m_Grid.SetObject(3, 2, new GridSprite(TextureHolder::GetTexture("graphics/diamond.png"),GridObject::DIAMOND));
 
 	// create boulders
-	m_Grid.SetObject(1, 3, new GridSprite(TextureHolder::GetTexture("graphics/boulder.png")));
-	m_Grid.SetObject(7, 7, new GridSprite(TextureHolder::GetTexture("graphics/boulder.png")));
+	m_Grid.SetObject(1, 3, new GridSprite(TextureHolder::GetTexture("graphics/boulder.png"),GridObject::BOULDER));
+	m_Grid.SetObject(7, 7, new GridSprite(TextureHolder::GetTexture("graphics/boulder.png"),GridObject::BOULDER));
+	
+
 
 	// Fill the rest of our grid with dirt
 	for (int x = 0; x < m_Grid.GRID_SIZE_X; ++x)
@@ -52,10 +58,41 @@ Engine::Engine()
 		for (int y = 0; y < m_Grid.GRID_SIZE_Y; ++y)
 		{
 			if (m_Grid.GetOjbect(x, y) == nullptr)
-				m_Grid.SetObject(x, y, new GridSprite(TextureHolder::GetTexture("graphics/dirt.png")));
+				m_Grid.SetObject(x, y, new GridSprite(TextureHolder::GetTexture("graphics/dirt.png"),GridObject::DIRT));
 		}
 	}
+
+	//background
+
+
+	m_Background.SetPosition(gridPosition);
+	for (int x = 0; x < m_Grid.GRID_SIZE_X; ++x)
+	{
+		for (int y = 0; y < m_Grid.GRID_SIZE_Y; ++y)
+		{
+			if (m_Background.GetOjbect(x, y) == nullptr)
+				m_Background.SetObject(x, y, new GridSprite(TextureHolder::GetTexture("graphics/Background.png"), GridObject::DIRT));
+		}
+	}
+
+	gridPosition.x = 0.5f*resolution.x - m_Grid.CELL_WIDTH  * 0.5f *(float)m_Wall.GRID_SIZE_X;
+	gridPosition.y = 0.5f*resolution.y - m_Grid.CELL_HEIGHT * 0.5f *(float)m_Wall.GRID_SIZE_Y;
+
+	m_Wall.SetPosition(gridPosition);
+
+	//side
+	for (int x = 0; x < m_Wall.GRID_SIZE_X; ++x)
+	{
+		for (int y = 0; y < m_Wall.GRID_SIZE_Y; ++y)
+		{
+			if (m_Wall.GetOjbect(x, y) == nullptr)
+				m_Wall.SetObject(x, y, new GridSprite(TextureHolder::GetTexture("graphics/Wall.png"), GridObject::DIRT));
+		}
+	}
+
+
 }
+
 
 void Engine::run()
 {
